@@ -1,5 +1,8 @@
 LLVM_DIR=$(shell brew --prefix llvm)
 LLVM_BIN=$(LLVM_DIR)/bin
+LLVM_LIB=$(LLVM_DIR)/lib
+
+export DYLD_LIBRARY_PATH=$(LLVM_LIB)
 
 CC=$(LLVM_BIN)/clang
 CXX=$(CC)++
@@ -13,7 +16,7 @@ CXXFLAGS += -Wall
 
 LDFLAGS = -dynamiclib -Wl,-undefined,dynamic_lookup
 
-all: hello.out
+all: hello.out dump.out
 
 %.dylib: %.cc
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
