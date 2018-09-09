@@ -2,8 +2,6 @@ LLVM_DIR=$(shell brew --prefix llvm)
 LLVM_BIN=$(LLVM_DIR)/bin
 LLVM_LIB=$(LLVM_DIR)/lib
 
-export DYLD_LIBRARY_PATH=$(LLVM_LIB)
-
 CC=$(LLVM_BIN)/clang
 CXX=$(CC)++
 OPT=$(LLVM_BIN)/opt
@@ -16,7 +14,10 @@ CXXFLAGS += -Wall
 
 LDFLAGS = -dynamiclib -Wl,-undefined,dynamic_lookup
 
-all: hello.out dump.out
+passes = hello dump mutate rtlib
+binaries = $(addsuffix .out,$(passes))
+
+all: $(binaries)
 
 %.dylib: %.cc
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
@@ -27,8 +28,8 @@ all: hello.out dump.out
 %.opt %.log: %.dylib example.pc
 	$(OPT) -load $< -$* example.pc > $*.opt 2> $*.log
 
-%.out: %.opt
-	$(CXX) -o $@ $<
+%.out: %.opt hook.o
+	$(CXX) -o $@ $^
 
 clean:
-	$(RM) *.dylib *.opt *.pc *.out
+	$(RM) *.dylib *.opt *.pc *.out *.o
