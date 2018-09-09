@@ -1,5 +1,5 @@
-#include "llvm/Pass.h"
 #include "llvm/IR/Function.h"
+#include "llvm/Pass.h"
 #include "llvm/Support/raw_ostream.h"
 
 using namespace llvm;
@@ -14,8 +14,8 @@ struct Hello : public FunctionPass {
     errs().write_escaped(F.getName()) << '\n';
     return false;
   }
-}; // end of struct Hello
-}  // end of anonymous namespace
+};
+} // namespace
 
 char Hello::ID = 0;
 
