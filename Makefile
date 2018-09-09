@@ -13,16 +13,19 @@ CXXFLAGS += -Wall
 
 LDFLAGS = -dynamiclib -Wl,-undefined,dynamic_lookup
 
-all: hello.log
+all: hello.out
 
 %.dylib: %.cc
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
 
 %.pc: %.cc
-	$(CXX) $(CXXFLAGS) -c -emit-llvm -o $@ $<
+	$(CXX) -c -emit-llvm -o $@ $<
 
 %.opt %.log: %.dylib example.pc
 	$(OPT) -load $< -$* example.pc > $*.opt 2> $*.log
 
+%.out: %.opt
+	$(CXX) -o $@ $<
+
 clean:
-	$(RM) *.dylib *.opt *.pc
+	$(RM) *.dylib *.opt *.pc *.out
