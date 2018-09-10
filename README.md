@@ -12,6 +12,7 @@ code](https://github.com/sampsyo/llvm-pass-skeleton).
 * [`dump`](dump.cc) dumps LLVM IR for the first function, basic block and instruction it sees
 * [`mutate`](mutate.cc) modifies the first binary operator of each function to a multiplication
 * [`rtlib`](rtlib.cc) inserts a call to a _hook_ function after the first binary operator
+* [`fnentry`](fnentry.cc) inserts call to _hook_ at function entry
 
 ## Q&A
 

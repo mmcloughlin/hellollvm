@@ -5,6 +5,7 @@ LLVM_LIB=$(LLVM_DIR)/lib
 CC=$(LLVM_BIN)/clang
 CXX=$(CC)++
 OPT=$(LLVM_BIN)/opt
+DIS=$(LLVM_BIN)/llvm-dis
 OBJDUMP=$(LLVM_BIN)/llvm-objdump
 
 CXXFLAGS  = -I$(LLVM_DIR)/include
@@ -15,26 +16,30 @@ CXXFLAGS += -Wall
 
 LDFLAGS = -dynamiclib -Wl,-undefined,dynamic_lookup
 
-passes = hello dump mutate rtlib
+passes = hello dump mutate rtlib fnentry
 bin = $(addsuffix .out,$(passes))
+optll = $(addsuffix .opt.ll,$(passes))
 dis = $(addsuffix .dis.s,$(passes))
 
-all: $(bin) $(dis)
+all: $(bin) $(dis) $(optll)
 
 %.dylib: %.cc
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
 
-%.pc: %.cc
+%.bc: %.cc
 	$(CXX) -c -emit-llvm -o $@ $<
 
-%.opt %.log: %.dylib example.pc
-	$(OPT) -load $< -$* example.pc > $*.opt 2> $*.log
+%.opt.bc %.log: %.dylib example.bc
+	$(OPT) -load $< -$* example.bc > $*.opt.bc 2> $*.log
 
-%.out: %.opt hook.o
+%.ll: %.bc
+	$(DIS) -o=$@ -show-annotations $<
+
+%.out: %.opt.bc hook.o
 	$(CXX) -O2 -o $@ $^
 
 %.dis.s: %.out
 	$(OBJDUMP) 	-disassemble-all $< > $@
 
 clean:
-	$(RM) *.dylib *.opt *.pc *.out *.o
+	$(RM) *.dylib *.bc *.out *.o

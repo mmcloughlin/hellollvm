@@ -3,3 +3,5 @@
 *.log
 *.opt
 *.dis.s
+*.bc
+*.ll
