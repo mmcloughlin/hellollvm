@@ -18,6 +18,7 @@ struct Attributes : public FunctionPass {
       return false;
     }
 
+    bool changed = false;
     auto a = cast<ConstantArray>(annos->getOperand(0));
     for (int i = 0; i < a->getNumOperands(); i++) {
       auto e = cast<ConstantStruct>(a->getOperand(i));
@@ -27,10 +28,11 @@ struct Attributes : public FunctionPass {
                             ->getOperand(0))
                         ->getAsCString();
         fn->addFnAttr(anno);
+        changed = true;
       }
     }
 
-    return false;
+    return changed;
   }
 
   bool runOnFunction(Function &F) override {
