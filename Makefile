@@ -16,12 +16,13 @@ CXXFLAGS += -Wall
 
 LDFLAGS = -dynamiclib -Wl,-undefined,dynamic_lookup
 
+target = example
 passes = hello dump mutate rtlib fnentry
 bin = $(addsuffix .out,$(passes))
 optll = $(addsuffix .opt.ll,$(passes))
 dis = $(addsuffix .dis.s,$(passes))
 
-all: $(bin) $(dis) $(optll)
+all: $(bin) $(dis) $(optll) $(target).ll
 
 %.dylib: %.cc
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
@@ -29,8 +30,8 @@ all: $(bin) $(dis) $(optll)
 %.bc: %.cc
 	$(CXX) -c -emit-llvm -o $@ $<
 
-%.opt.bc %.log: %.dylib example.bc
-	$(OPT) -load $< -$* example.bc > $*.opt.bc 2> $*.log
+%.opt.bc %.log: %.dylib $(target).bc
+	$(OPT) -load $< -$* $(target).bc > $*.opt.bc 2> $*.log
 
 %.ll: %.bc
 	$(DIS) -o=$@ -show-annotations $<
