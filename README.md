@@ -21,4 +21,4 @@ code](https://github.com/sampsyo/llvm-pass-skeleton).
 
 **How do you detect function attributes like `__attribute__((annotate("foo"))`?** These are recorded in a global variable called `llvm.global.annotations`. Brandon Holt demonstrates a technique to [parse this and attach them as function attributes](http://bholt.org/posts/llvm-quick-tricks.html).
 
-**What is the return value of `runOnFunction`?** Return `true` if the function was modified by the call.
+**What is the return value of `doInitialization` and `runOnFunction`?** Return `true` if any changes were made.
