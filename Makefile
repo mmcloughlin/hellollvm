@@ -17,7 +17,7 @@ CXXFLAGS += -Wall
 LDFLAGS = -dynamiclib -Wl,-undefined,dynamic_lookup
 
 target = example
-passes = hello dump mutate rtlib fnentry attr srcloc
+passes = hello dump mutate rtlib fnentry attr srcloc cli
 bin = $(addsuffix .out,$(passes))
 optll = $(addsuffix .opt.ll,$(passes))
 dis = $(addsuffix .dis.s,$(passes))
@@ -32,6 +32,9 @@ all: $(bin) $(dis) $(optll) $(target).ll
 
 %.opt.bc %.log: %.dylib $(target).bc
 	$(OPT) -load $< -$* $(target).bc > $*.opt.bc 2> $*.log
+
+%.help: %.dylib
+	$(OPT) -load $< -help > $@
 
 %.ll: %.bc
 	$(DIS) -o=$@ -show-annotations $<

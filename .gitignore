@@ -5,3 +5,4 @@
 *.dis.s
 *.bc
 *.ll
+*.help

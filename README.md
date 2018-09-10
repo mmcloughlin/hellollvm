@@ -15,6 +15,7 @@ code](https://github.com/sampsyo/llvm-pass-skeleton).
 * [`fnentry`](fnentry.cc) inserts call at function entry
 * [`attr`](attr.cc) finds functions with attribute `foo`
 * [`srcloc`](srcloc.cc) prints `file:line` metadata from each function (requires debug information)
+* [`cli`](cli.cc) shows how to define a command-line option
 
 ## Q&A
 
