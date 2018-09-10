@@ -12,10 +12,13 @@ code](https://github.com/sampsyo/llvm-pass-skeleton).
 * [`dump`](dump.cc) dumps LLVM IR for the first function, basic block and instruction it sees
 * [`mutate`](mutate.cc) modifies the first binary operator of each function to a multiplication
 * [`rtlib`](rtlib.cc) inserts a call to a _hook_ function after the first binary operator
-* [`fnentry`](fnentry.cc) inserts call to _hook_ at function entry
+* [`fnentry`](fnentry.cc) inserts call at function entry
+* [`attr`](attr.cc) finds functions with attribute `foo`
 
 ## Q&A
 
 **Why does the `RegisterPass<>` method not work when loaded into `clang`?** Under this method the pass dynamic library is loaded and enabled with `opt -load <pass lib> -<pass name>`. By default, the `clang` CLI emulates `gcc` as much as possible. In particular it does not directly expose LLVM optimization passes. To get it to work directly with `clang` we need to [register the pass in code](http://www.cs.cornell.edu/~asampson/blog/clangpass.html) using the `PassManagerBuilder`.
 
 **How do you detect function attributes like `__attribute__((annotate("foo"))`?** These are recorded in a global variable called `llvm.global.annotations`. Brandon Holt demonstrates a technique to [parse this and attach them as function attributes](http://bholt.org/posts/llvm-quick-tricks.html).
+
+**What is the return value of `runOnFunction`?** Return `true` if the function was modified by the call.

@@ -17,7 +17,7 @@ CXXFLAGS += -Wall
 LDFLAGS = -dynamiclib -Wl,-undefined,dynamic_lookup
 
 target = example
-passes = hello dump mutate rtlib fnentry
+passes = hello dump mutate rtlib fnentry attr
 bin = $(addsuffix .out,$(passes))
 optll = $(addsuffix .opt.ll,$(passes))
 dis = $(addsuffix .dis.s,$(passes))
