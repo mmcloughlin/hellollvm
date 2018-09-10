@@ -14,6 +14,7 @@ code](https://github.com/sampsyo/llvm-pass-skeleton).
 * [`rtlib`](rtlib.cc) inserts a call to a _hook_ function after the first binary operator
 * [`fnentry`](fnentry.cc) inserts call at function entry
 * [`attr`](attr.cc) finds functions with attribute `foo`
+* [`srcloc`](srcloc.cc) prints `file:line` metadata from each function (requires debug information)
 
 ## Q&A
 
@@ -22,3 +23,5 @@ code](https://github.com/sampsyo/llvm-pass-skeleton).
 **How do you detect function attributes like `__attribute__((annotate("foo"))`?** These are recorded in a global variable called `llvm.global.annotations`. Brandon Holt demonstrates a technique to [parse this and attach them as function attributes](http://bholt.org/posts/llvm-quick-tricks.html).
 
 **What is the return value of `doInitialization` and `runOnFunction`?** Return `true` if any changes were made.
+
+**How do you determine original source code location of an LLVM Function?** This requires the program is compiled with debug information `-g`. The information can be accessed through [`getSubprogram`](http://llvm.org/doxygen/classllvm_1_1Function.html#a4d834f9897d15e3a6349063b5d637cd8) method.
