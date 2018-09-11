@@ -21,14 +21,15 @@ passes = hello dump mutate rtlib fnentry attr srcloc cli returns
 bin = $(addsuffix .out,$(passes))
 optll = $(addsuffix .opt.ll,$(passes))
 dis = $(addsuffix .dis.s,$(passes))
+verify = $(addsuffix .v,$(passes))
 
-all: $(bin) $(dis) $(optll) $(target).ll
+all: $(bin) $(dis) $(optll) $(verify) $(target).ll
 
 %.dylib: %.cc
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
 
 %.bc: %.cc
-	$(CXX) -g -c -emit-llvm -o $@ $<
+	$(CXX) -O1 -g -c -emit-llvm -o $@ $<
 
 %.opt.bc %.log: %.dylib $(target).bc
 	$(OPT) -load $< -$* $(target).bc > $*.opt.bc 2> $*.log
@@ -41,6 +42,9 @@ all: $(bin) $(dis) $(optll) $(target).ll
 
 %.out: %.opt.bc hook.o
 	$(CXX) -O2 -o $@ $^
+
+%.v: %.out
+	./$< > $@ 2>&1
 
 %.dis.s: %.out
 	$(OBJDUMP) 	-disassemble-all $< > $@

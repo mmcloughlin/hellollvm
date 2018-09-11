@@ -27,3 +27,12 @@ code](https://github.com/sampsyo/llvm-pass-skeleton).
 **What is the return value of `doInitialization` and `runOnFunction`?** Return `true` if any changes were made.
 
 **How do you determine original source code location of an LLVM Function?** This requires the program is compiled with debug information `-g`. The information can be accessed through [`getSubprogram`](http://llvm.org/doxygen/classllvm_1_1Function.html#a4d834f9897d15e3a6349063b5d637cd8) method.
+
+## Todo
+
+- [ ] Pass arguments to hook functions
+- [ ] Function exit in the case of exceptions
+- [ ] Function exit with tail calls?
+- [ ] How to inline hook function calls?
+- [ ] Combine to a full tracer pass
+- [ ] Get pass working directly with clang (not via `opt`)
