@@ -18,6 +18,7 @@ code](https://github.com/sampsyo/llvm-pass-skeleton).
 * [`cli`](cli.cc) shows how to define a command-line option
 * [`returns`](returns.cc) inserts calls before function returns
 * [`hookargs`](hookargs.cc) calls a hook function with arguments
+* [`trace`](trace.cc) inserts hooks at function enter and exit points
 
 ## Q&A
 
