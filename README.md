@@ -41,4 +41,5 @@ code](https://github.com/sampsyo/llvm-pass-skeleton).
 - [ ] Function exit with tail calls?
 - [ ] How to inline hook function calls?
 - [ ] Combine to a full tracer pass
+- [ ] Call c++ hook function (handle mangling)
 - [ ] Get pass working directly with clang (not via `opt`)

@@ -53,5 +53,8 @@ all: $(bin) $(dis) $(optll) $(verify) $(target).ll $(hooks).ll
 %.dis.s: %.out
 	$(OBJDUMP) 	-disassemble-all $< > $@
 
+tools:
+	pip install cxxfilt
+
 clean:
 	$(RM) $$(cat .gitignore)
