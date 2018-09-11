@@ -16,6 +16,7 @@ code](https://github.com/sampsyo/llvm-pass-skeleton).
 * [`attr`](attr.cc) finds functions with attribute `foo`
 * [`srcloc`](srcloc.cc) prints `file:line` metadata from each function (requires debug information)
 * [`cli`](cli.cc) shows how to define a command-line option
+* [`returns`](returns.cc) inserts calls before function returns
 
 ## Q&A
 
