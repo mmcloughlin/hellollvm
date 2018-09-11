@@ -18,13 +18,13 @@ code](https://github.com/sampsyo/llvm-pass-skeleton).
 * [`cli`](cli.cc) shows how to define a command-line option
 * [`returns`](returns.cc) inserts calls before function returns
 * [`hookargs`](hookargs.cc) calls a hook function with arguments
-* [`trace`](trace.cc) inserts hooks at function enter and exit points
+* [`trace`](trace.cc) inserts hooks at function enter and exit points ([script to verify correctness](parsetrace.py))
 
 ## Q&A
 
 **Why does the `RegisterPass<>` method not work when loaded into `clang`?** Under this method the pass dynamic library is loaded and enabled with `opt -load <pass lib> -<pass name>`. By default, the `clang` CLI emulates `gcc` as much as possible. In particular it does not directly expose LLVM optimization passes. To get it to work directly with `clang` we need to [register the pass in code](http://www.cs.cornell.edu/~asampson/blog/clangpass.html) using the `PassManagerBuilder`.
 
-**How do you detect function attributes like `__attribute__((annotate("foo"))`?** These are recorded in a global variable called `llvm.global.annotations`. Brandon Holt demonstrates a technique to [parse this and attach them as function attributes](http://bholt.org/posts/llvm-quick-tricks.html).
+**How do you detect function attributes like `__attribute__((annotate("foo")))`?** These are recorded in a global variable called `llvm.global.annotations`. Brandon Holt demonstrates a technique to [parse this and attach them as function attributes](http://bholt.org/posts/llvm-quick-tricks.html).
 
 **What is the return value of `doInitialization` and `runOnFunction`?** Return `true` if any changes were made.
 
