@@ -17,6 +17,7 @@ code](https://github.com/sampsyo/llvm-pass-skeleton).
 * [`srcloc`](srcloc.cc) prints `file:line` metadata from each function (requires debug information)
 * [`cli`](cli.cc) shows how to define a command-line option
 * [`returns`](returns.cc) inserts calls before function returns
+* [`hookargs`](hookargs.cc) calls a hook function with arguments
 
 ## Q&A
 
@@ -30,7 +31,7 @@ code](https://github.com/sampsyo/llvm-pass-skeleton).
 
 ## Todo
 
-- [ ] Pass arguments to hook functions
+- [x] Pass arguments to hook functions
 - [ ] Function exit in the case of exceptions
 - [ ] Function exit with tail calls?
 - [ ] How to inline hook function calls?
