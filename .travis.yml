@@ -26,11 +26,11 @@ matrix:
             - lldb-6.0
             - lld-6.0
       env:
-        - TOOLCHAIN_INSTALL="LLVM_DIR=/usr/lib/llvm-6.0"
+        - TOOLCHAIN_INSTALL="export LLVM_DIR=/usr/lib/llvm-6.0"
     - os: osx
       osx_image: xcode8
       env:
-        - TOOLCHAIN_INSTALL="brew install --with-toolchain llvm && LLVM_DIR=$(brew --prefix llvm)"
+        - TOOLCHAIN_INSTALL="brew install --with-toolchain llvm && export LLVM_DIR=$(brew --prefix llvm)"
 before_install:
   - eval "${TOOLCHAIN_INSTALL}"
 install:
