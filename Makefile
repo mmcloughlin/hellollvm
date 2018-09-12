@@ -1,4 +1,3 @@
-LLVM_DIR=$(shell brew --prefix llvm)
 LLVM_BIN=$(LLVM_DIR)/bin
 LLVM_LIB=$(LLVM_DIR)/lib
 
@@ -14,7 +13,7 @@ CXXFLAGS += -fPIC -fvisibility-inlines-hidden
 CXXFLAGS += -fno-exceptions -fno-rtti -std=c++11
 CXXFLAGS += -Wall
 
-LDFLAGS = -dynamiclib -Wl,-undefined,dynamic_lookup
+LDFLAGS = -shared -Wl,-undefined,dynamic_lookup
 
 target = example
 hooks = hook
@@ -26,7 +25,7 @@ verify = $(addsuffix .v,$(passes))
 
 all: $(bin) $(dis) $(optll) $(verify) $(target).ll $(hooks).ll trace.txt
 
-%.dylib: %.cc
+%.so: %.cc
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
 
 %.bc: %.cc
@@ -35,10 +34,10 @@ all: $(bin) $(dis) $(optll) $(verify) $(target).ll $(hooks).ll trace.txt
 %.bc: %.c
 	$(CC) -O1 -g -c -emit-llvm -o $@ $<
 
-%.opt.bc %.log: %.dylib $(target).bc
-	$(OPT) -load $< -$* $(target).bc > $*.opt.bc 2> $*.log
+%.opt.bc %.log: %.so $(target).bc
+	$(OPT) -load ./$< -$* $(target).bc > $*.opt.bc 2> $*.log
 
-%.help: %.dylib
+%.help: %.so
 	$(OPT) -load $< -help > $@
 
 %.ll: %.bc
