@@ -69,7 +69,10 @@ def format_time(secs):
 
 
 def main():
-    events = list(read_trace_lines(sys.stdin))
+    input_filename = sys.argv[1]
+    with open(input_filename) as f:
+        events = list(read_trace_lines(f))
+
     verify_trace(events)
 
     profile = extract_function_durations(events)

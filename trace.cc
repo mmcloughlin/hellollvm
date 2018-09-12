@@ -26,17 +26,13 @@ struct Trace : public FunctionPass {
     auto *fname = builder.CreateGlobalStringPtr(F.getName());
     builder.CreateCall(traceEnter, {fname});
 
-    // Trace before return instructions.
+    // Trace before exit instructions.
     Constant *traceLeave =
         F.getParent()->getOrInsertFunction("trace_leave", functype);
     for (auto &B : F) {
-      for (auto &I : B) {
-        auto *op = dyn_cast<ReturnInst>(&I);
-        if (!op) {
-          continue;
-        }
-
-        IRBuilder<> builder(op);
+      auto *t = B.getTerminator();
+      if (isa<ReturnInst>(t) || isa<ResumeInst>(t)) {
+        IRBuilder<> builder(t);
         builder.CreateCall(traceLeave, {fname});
       }
     }

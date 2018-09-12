@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdexcept>
 
 // add adds two numbers.
 int add(int a, int b) { return a + b; }
@@ -47,6 +48,38 @@ int gcd(int a, int b) { return b ? gcd(b, a % b) : a; }
 // tailcall is an artificial attempt to produce a tail call.
 int tailcall(int (*f)(int)) { return f(-42); }
 
+// scope object to demonstrate cleanup behavior.
+struct scope {
+  scope() { std::cerr << "enter scope" << std::endl; };
+  ~scope() { std::cerr << "leave scope" << std::endl; };
+  int m;
+};
+
+// raise deliberately throws an exception.
+void raise() {
+  scope s;
+  throw std::runtime_error("delibrate exception");
+}
+
+// raise_wrapper calls raise. The intention is to create a stack trace between
+// raise and the try/catch block.
+void raise_wrapper() {
+  scope s;
+  raise();
+}
+
+// trycatch catches an exception.
+int trycatch() {
+  try {
+    raise_wrapper();
+  } catch (const std::logic_error &e) {
+    return 1;
+  } catch (const std::runtime_error &e) {
+    return 2;
+  }
+  return 0;
+}
+
 // verify executes an assertion as a poor-man's unit test.
 #define verify(test)                                                           \
   do {                                                                         \
@@ -78,6 +111,8 @@ int main(void) {
   verify(gcd(54, 24) == 6);
 
   verify(tailcall(abs) == 42);
+
+  verify(trycatch() == 2);
 
   return 0;
 }

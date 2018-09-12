@@ -24,7 +24,7 @@ optll = $(addsuffix .opt.ll,$(passes))
 dis = $(addsuffix .dis.s,$(passes))
 verify = $(addsuffix .v,$(passes))
 
-all: $(bin) $(dis) $(optll) $(verify) $(target).ll $(hooks).ll
+all: $(bin) $(dis) $(optll) $(verify) $(target).ll $(hooks).ll trace.txt
 
 %.dylib: %.cc
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
@@ -49,6 +49,9 @@ all: $(bin) $(dis) $(optll) $(verify) $(target).ll $(hooks).ll
 
 %.v: %.out
 	./$< > $@ 2>&1
+
+trace.txt: parsetrace.py trace.v
+	python $^ > $@
 
 %.dis.s: %.out
 	$(OBJDUMP) 	-disassemble-all $< > $@

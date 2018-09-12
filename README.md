@@ -34,6 +34,21 @@ code](https://github.com/sampsyo/llvm-pass-skeleton).
 
 **How do you create a floating-point constant?** Use [`ConstantFP`](http://llvm.org/doxygen/classllvm_1_1ConstantFP.html), for example `ConstantFP::get(Type::getDoubleTy(ctx), 42.0)`.
 
+**Which instructions exit a function?** [Terminator instructions](https://llvm.org/docs/LangRef.html#terminator-instructions) end basic blocks, either to exit the function or to branch to another part of the same function. The terminator instructions are:
+
+* `ret` returns control flow back to the caller.
+* `br` transfers control flow to one of two other blocks in the current function.
+* `switch` is a generalization of `br`, allowing control flow to several other blocks based on a value
+* `indirectbr` jumps to another location by addressing into a list of labels
+* `invoke` is a call instruction that handles alternative control flow in the case of an exception
+* `resume` propagates an exception
+* `catchswitch` switches between exception catch handlers
+* `catchret`
+* `cleanupret`
+* `unreachable` informs the optimizer that a piece of code us unreachable
+
+Use `getTerminator` method of [`BasicBlock`](http://llvm.org/doxygen/classllvm_1_1BasicBlock.html) to find.
+
 ## Todo
 
 - [x] Pass arguments to hook functions
