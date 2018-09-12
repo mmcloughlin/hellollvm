@@ -28,7 +28,6 @@ matrix:
       env:
         - TOOLCHAIN_INSTALL="export LLVM_DIR=/usr/lib/llvm-6.0"
     - os: osx
-      osx_image: xcode8
       env:
         - TOOLCHAIN_INSTALL="HOMEBREW_NO_AUTO_UPDATE=1 brew install --with-toolchain llvm && export LLVM_DIR=$(brew --prefix llvm)"
 before_install:
