@@ -30,7 +30,7 @@ matrix:
     - os: osx
       osx_image: xcode8
       env:
-        - TOOLCHAIN_INSTALL="brew install --with-toolchain llvm && export LLVM_DIR=$(brew --prefix llvm)"
+        - TOOLCHAIN_INSTALL="HOMEBREW_NO_AUTO_UPDATE=1 brew install --with-toolchain llvm && export LLVM_DIR=$(brew --prefix llvm)"
 before_install:
   - eval "${TOOLCHAIN_INSTALL}"
 install:
