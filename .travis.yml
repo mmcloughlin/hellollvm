@@ -3,35 +3,15 @@ matrix:
   include:
     - os: linux
       dist: trusty
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-6.0
-          packages:
-            - libllvm6.0
-            - llvm-6.0
-            - llvm-6.0-dev
-            - llvm-6.0-doc
-            - llvm-6.0-examples
-            - llvm-6.0-runtime
-            - clang-6.0
-            - clang-tools-6.0
-            - clang-6.0-doc
-            - libclang-common-6.0-dev
-            - libclang-6.0-dev
-            - libclang1-6.0
-            - clang-format-6.0
-            - python-clang-6.0
-            - lldb-6.0
-            - lld-6.0
       env:
-        - TOOLCHAIN_INSTALL="export LLVM_DIR=/usr/lib/llvm-6.0"
+        - LLVM_PACKAGE="clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04"
     - os: osx
       env:
-        - TOOLCHAIN_INSTALL="HOMEBREW_NO_AUTO_UPDATE=1 brew install --with-toolchain llvm && export LLVM_DIR=$(brew --prefix llvm)"
+        - LLVM_PACKAGE="clang+llvm-6.0.0-x86_64-apple-darwin"
 before_install:
-  - eval "${TOOLCHAIN_INSTALL}"
+  - wget http://releases.llvm.org/6.0.0/${LLVM_PACKAGE}.tar.xz
+  - tar -xvf ${LLVM_PACKAGE}.tar.xz
+  - export LLVM_DIR=${TRAVIS_BUILD_DIR}/${LLVM_PACKAGE}
 install:
   - virtualenv env
   - source env/bin/activate
