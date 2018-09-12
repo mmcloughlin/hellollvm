@@ -2,8 +2,6 @@ import sys
 import logging
 import collections
 
-import cxxfilt
-
 Event = collections.namedtuple('Event', 'tipe function timestamp')
 
 
@@ -79,7 +77,7 @@ def main():
     for function, durations in profile.items():
         avg = mean(durations)
         print '{fn}\n\tavg = {avg}\n'.format(
-            fn=cxxfilt.demangle(function),
+            fn=function,
             avg=format_time(avg),
         )
 

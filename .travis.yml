@@ -10,11 +10,7 @@ matrix:
         - LLVM_PACKAGE="clang+llvm-6.0.0-x86_64-apple-darwin"
 before_install:
   - wget http://releases.llvm.org/6.0.0/${LLVM_PACKAGE}.tar.xz
-  - tar -xvf ${LLVM_PACKAGE}.tar.xz
+  - tar -xf ${LLVM_PACKAGE}.tar.xz
   - export LLVM_DIR=${TRAVIS_BUILD_DIR}/${LLVM_PACKAGE}
-install:
-  - virtualenv env
-  - source env/bin/activate
-  - make tools
 script:
   - make -j
