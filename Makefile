@@ -17,7 +17,7 @@ LDFLAGS = -shared -Wl,-undefined,dynamic_lookup
 
 target = example
 hooks = hook
-passes = hello dump mutate rtlib fnentry attr srcloc cli returns hookargs trace
+passes = hello dump mutate rtlib fnentry attr srcloc cli returns hookargs trace demangle
 bin = $(addsuffix .out,$(passes))
 optll = $(addsuffix .opt.ll,$(passes))
 dis = $(addsuffix .dis.s,$(passes))

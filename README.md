@@ -49,6 +49,8 @@ code](https://github.com/sampsyo/llvm-pass-skeleton).
 
 Use `getTerminator` method of [`BasicBlock`](http://llvm.org/doxygen/classllvm_1_1BasicBlock.html) to find.
 
+**How do you demangle C++ names?** LLVM provides its own implementation of `__cxa_demangle` (from `cxxabi.h`) in [`Demangle.h`](http://llvm.org/doxygen/Demangle_8h.html), specifically `itaniumDemangle`. The [symbolizer](https://llvm.org/docs/CommandGuide/llvm-symbolizer.html) source code provides a useful [example](https://github.com/llvm-mirror/llvm/blob/0444f576689f40fd292478aff54a0f6a9ceebfdb/lib/DebugInfo/Symbolize/Symbolize.cpp#L474-L482).
+
 ## Todo
 
 - [x] Pass arguments to hook functions
@@ -58,3 +60,4 @@ Use `getTerminator` method of [`BasicBlock`](http://llvm.org/doxygen/classllvm_1
 - [ ] Combine to a full tracer pass
 - [ ] Call c++ hook function (handle mangling)
 - [ ] Get pass working directly with clang (not via `opt`)
+- [ ] [New style passes](https://medium.com/@mshockwave/writing-llvm-pass-in-2018-part-i-531c700e85eb)?
