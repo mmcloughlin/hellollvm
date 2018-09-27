@@ -19,6 +19,7 @@ code](https://github.com/sampsyo/llvm-pass-skeleton).
 * [`returns`](returns.cc) inserts calls before function returns
 * [`hookargs`](hookargs.cc) calls a hook function with arguments
 * [`trace`](trace.cc) inserts hooks at function enter and exit points ([script to verify correctness](parsetrace.py))
+* [`demangle`](demangle.cc) is `hello` with C++ name demangling
 
 ## Q&A
 
