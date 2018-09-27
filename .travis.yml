@@ -13,4 +13,4 @@ before_install:
   - tar -xf ${LLVM_PACKAGE}.tar.xz
   - export LLVM_DIR=${TRAVIS_BUILD_DIR}/${LLVM_PACKAGE}
 script:
-  - make -j
+  - make
