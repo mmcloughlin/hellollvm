@@ -4,12 +4,12 @@ matrix:
     - os: linux
       dist: trusty
       env:
-        - LLVM_PACKAGE="clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-14.04"
+        - LLVM_PACKAGE="clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-14.04"
     - os: osx
       env:
-        - LLVM_PACKAGE="clang+llvm-6.0.0-x86_64-apple-darwin"
+        - LLVM_PACKAGE="clang+llvm-7.0.0-x86_64-apple-darwin"
 before_install:
-  - wget http://releases.llvm.org/6.0.0/${LLVM_PACKAGE}.tar.xz
+  - wget http://releases.llvm.org/7.0.0/${LLVM_PACKAGE}.tar.xz
   - tar -xf ${LLVM_PACKAGE}.tar.xz
   - export LLVM_DIR=${TRAVIS_BUILD_DIR}/${LLVM_PACKAGE}
 script:
