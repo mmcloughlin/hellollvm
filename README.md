@@ -50,7 +50,7 @@ code](https://github.com/sampsyo/llvm-pass-skeleton).
 
 Use `getTerminator` method of [`BasicBlock`](http://llvm.org/doxygen/classllvm_1_1BasicBlock.html) to find.
 
-**How do you demangle C++ names?** LLVM provides its own implementation of `__cxa_demangle` (from `cxxabi.h`) in [`Demangle.h`](http://llvm.org/doxygen/Demangle_8h.html), specifically `itaniumDemangle`. The [symbolizer](https://llvm.org/docs/CommandGuide/llvm-symbolizer.html) source code provides a useful [example](https://github.com/llvm-mirror/llvm/blob/0444f576689f40fd292478aff54a0f6a9ceebfdb/lib/DebugInfo/Symbolize/Symbolize.cpp#L474-L482).
+**How do you demangle C++ names?** LLVM provides its own implementation of `__cxa_demangle` (from `cxxabi.h`) in [`Demangle.h`](http://llvm.org/doxygen/Demangle_8h.html), specifically `itaniumDemangle`. The [symbolizer](https://llvm.org/docs/CommandGuide/llvm-symbolizer.html) source code provides a useful [example](https://github.com/llvm-mirror/llvm/blob/0444f576689f40fd292478aff54a0f6a9ceebfdb/lib/DebugInfo/Symbolize/Symbolize.cpp#L474-L482). The [`ItaniumPartialDemangler`](http://llvm.org/doxygen/structllvm_1_1ItaniumPartialDemangler.html) (introduced in LLVM 7) enables access to subcomponents of the mangled name.
 
 ## Todo
 

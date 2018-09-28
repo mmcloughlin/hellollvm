@@ -3,6 +3,8 @@
 #include "llvm/Pass.h"
 #include "llvm/Support/raw_ostream.h"
 
+#include <cstdlib>
+
 using namespace llvm;
 
 namespace {
@@ -27,6 +29,8 @@ struct Demangle : public FunctionPass {
     errs() << "\tisFunction=" << Demangler.isFunction() << '\n';
     errs() << "\tisCtorOrDtor=" << Demangler.isCtorOrDtor() << '\n';
     errs() << "\tisSpecialName=" << Demangler.isSpecialName() << '\n';
+    errs() << "\thasFunctionQualifiers=" << Demangler.hasFunctionQualifiers()
+           << '\n';
 
     if (!Demangler.isFunction()) {
       return false;

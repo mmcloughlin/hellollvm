@@ -11,7 +11,7 @@ CXXFLAGS  = -I$(LLVM_DIR)/include
 CXXFLAGS += -D__STDC_LIMIT_MACROS -D__STDC_CONSTANT_MACROS -Wno-long-long
 CXXFLAGS += -fPIC -fvisibility-inlines-hidden
 CXXFLAGS += -fno-exceptions -fno-rtti -std=c++11
-CXXFLAGS += -Wall
+CXXFLAGS += -Wall -pedantic
 
 LDFLAGS = -shared -Wl,-undefined,dynamic_lookup
 
