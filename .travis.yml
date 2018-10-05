@@ -1,16 +1,23 @@
 language: cpp
 matrix:
   include:
-    - os: linux
-      dist: trusty
-      env:
-        - LLVM_PACKAGE="clang+llvm-7.0.0-x86_64-linux-gnu-ubuntu-14.04"
-    - os: osx
-      env:
-        - LLVM_PACKAGE="clang+llvm-7.0.0-x86_64-apple-darwin"
+  - os: linux
+    dist: trusty
+    env:
+    - TRIPLE="x86_64-unknown-linux-gnu"
+  - os: osx
+    env:
+    - TRIPLE="x86_64-apple-darwin17.4.0"
 before_install:
-  - wget http://releases.llvm.org/7.0.0/${LLVM_PACKAGE}.tar.xz
-  - tar -xf ${LLVM_PACKAGE}.tar.xz
-  - export LLVM_DIR=${TRAVIS_BUILD_DIR}/${LLVM_PACKAGE}
+- pip install --user awscli
+- export LLVM_PACKAGE="clang+llvm-7.0.0-${TRIPLE}"
+- aws s3 cp s3://hellollvm/packages/${LLVM_PACKAGE}.tar.gz .
+- tar -xf ${LLVM_PACKAGE}.tar.gz
+- export LLVM_DIR=${TRAVIS_BUILD_DIR}/clang+llvm-7.0.0
 script:
-  - make -j
+- make -j
+env:
+  global:
+  - PATH=$HOME/.local/bin:$PATH
+  - secure: ypM0fpqyB6+X7Cs5tT8Z9qT8xsXocgeFjprevkQCHFUn0DJY24nZiagBD7a5eyVGSVkTOpsZVekgDdoDUW+2mSbl5RrJoIWJgFwZxxv9oTjND/vzeWtU1u2QgaYQ/i6SvtUiPT/VcdiEPMqR8Yxh93JSn1eyEDFlGw4EuCTbvtw+X2PJ8obMFyybUytY2F1Y9q33bvKbFbsvmXt588Qgsdx9vL6W7Y4IRlWhPFcIXG1s1LnWnoy9YC6Wy1OVaJtYCLtpOv9Y6A4JY4o6kBV5LMTw7S4907FItZmTSsn+h/B/ltELbxz3Knu79m7Hn4uCeeBb3o95D0irjY1ihWEHf2cYGap75br4SFELcOA07ifWWOPXmIl9MtA4lGH5GuPflY9rMhPNeKvJ0CQ9KkrCNfezTJjpW+dRQ3AKo8mku4Jk3in7/pE3BjfT2ay2v5toTUUApt+jMwznImfIBnRTUc9Yu/W+WRaD0sMNOrc/X+bcPwsComx/UqMMAYbIA5dyQNnPVvkkvqVieWJX2J+x3NLKrbLJ9D0kFW8BLyYDIQpteeASMKTpaxuZg2DdW/hTucRg0ZDtvAqThpgibr8Jzp+gHTPZ+vzrGQ8Tl3QcH55wCyuKEuzhQK9/yhUnL1m1ixX0mIS8e4s368KPRwPHi33P4gnHrq3kOg4450HJFY0=
+  - secure: BNgjp1i9qcxyFsgDL55i4izsXmvoTeANdvy7d4r3cOOHEWTXX+rtIEP6KAwC2DspR8KqgEjKhboh+Y4xB0Oqekg1Eorm72KQ41ClmamEg3ToWeL7o1c7fuz2WsC6Z8e0PZhMTTU4pwvjCraTs0ECwfMoNzSnaEYtU4ItV8uuW4CmgKELCVc0hf1SjUS+KHXlMA24UXhTCNM7Q5qya+URJUWPO2AhdM1HeWM3f/n8mqxcoepUZxIwzjDe1S03f+wttnQUfmFhMxjeuIiScI8gNoVi4xmdDofmGhYHcUivlovCsUqgyJXG6qMb09xVPMlqThJO+gOB9MxMHKnhTWi+gCL9lwMCwMwcZXrhJM6xtEvSPg23eoTA9nNivxNE7i1dE5dEQ7SsqJlGPCVXjjY+6GPDqQdMM0n8uNUl3LUY7FlpTU3SR75jnzpzNLx7hLrzgmfG/15e3YVjg/TJCFb9XU7UEDjMgHAlIBvNW/6wK4EWQ58rnKS8s7HqE1R56fkzaUc5RRxklsghzUbLj3Qp9HG177edGoEBJXj15ExPrZGp7xBS9JnZzon1SOMctgrzRpbh0//Ad7GnhGaHdXCTmr7v1irCXT+RMyu1Ocs4I2tpBJeAWLh8eZ/u9bogpfc8qxdFs9H1flsS4/h2rfGkF3UnrLgJWZrWiekFwklGvjQ=
