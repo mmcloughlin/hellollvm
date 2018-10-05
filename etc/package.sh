@@ -94,8 +94,10 @@ EOF
 
 #-----------------------------------------------------------------------------
 
+triple=$(${installdir}/bin/llvm-config --host-target)
+
 cd ${packagedir}
-archive=${packagename}.tar.gz
+archive=${packagename}-${triple}.tar.gz
 tar czf ${archive} ${packagename}
 cp ${archive} ${cwd}
 cd ${workdir}
