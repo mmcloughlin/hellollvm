@@ -4,6 +4,7 @@ name=clang+llvm
 version=7.0.0
 j=8
 
+
 #-----------------------------------------------------------------------------
 
 packagename=${name}-${version}
@@ -77,6 +78,8 @@ cd ${builddir}
 ${CMAKE} -G 'Unix Makefiles' \
     -DCMAKE_INSTALL_PREFIX=${installdir} \
     -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_C_COMPILER=$(which clang) \
+    -DCMAKE_CXX_COMPILER=$(which clang++) \
     -DLLVM_ENABLE_ASSERTIONS=On \
     -DLLVM_BUILD_LLVM_DYLIB=On \
     -DLLVM_LINK_LLVM_DYLIB=On \
