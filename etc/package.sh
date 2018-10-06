@@ -4,7 +4,6 @@ name=clang+llvm
 version=7.0.0
 j=8
 
-
 #-----------------------------------------------------------------------------
 
 packagename=${name}-${version}
@@ -78,8 +77,6 @@ cd ${builddir}
 ${CMAKE} -G 'Unix Makefiles' \
     -DCMAKE_INSTALL_PREFIX=${installdir} \
     -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_C_COMPILER=$(which clang) \
-    -DCMAKE_CXX_COMPILER=$(which clang++) \
     -DLLVM_ENABLE_ASSERTIONS=On \
     -DLLVM_BUILD_LLVM_DYLIB=On \
     -DLLVM_LINK_LLVM_DYLIB=On \
@@ -98,10 +95,12 @@ EOF
 #-----------------------------------------------------------------------------
 
 triple=$(${installdir}/bin/llvm-config --host-target)
+fullpackagename="${packagename}-${triple}"
+archive=${fullpackagename}.tar.gz
 
 cd ${packagedir}
-archive=${packagename}-${triple}.tar.gz
-tar czf ${archive} ${packagename}
+mv ${packagename} ${fullpackagename}
+tar czf ${archive} ${fullpackagename}
 cp ${archive} ${cwd}
 cd ${workdir}
 
