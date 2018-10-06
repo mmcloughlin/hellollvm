@@ -17,6 +17,7 @@ before_install:
 - tar -xf ${LLVM_PACKAGE}.tar.gz
 - export LLVM_DIR=${TRAVIS_BUILD_DIR}/clang+llvm-7.0.0
 script:
+- cmp etc/package ${LLVM_DIR}/package.sh
 - make -j
 env:
   global:
