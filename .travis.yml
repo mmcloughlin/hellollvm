@@ -10,6 +10,8 @@ matrix:
     - TRIPLE="x86_64-apple-darwin17.4.0"
 before_install:
 - pip install --user awscli
+- export PATH=$(python -c 'import site; print(site.USER_BASE + "/bin")'):$PATH
+
 - export LLVM_PACKAGE="clang+llvm-7.0.0-${TRIPLE}"
 - aws s3 cp s3://hellollvm/packages/${LLVM_PACKAGE}.tar.gz .
 - tar -xf ${LLVM_PACKAGE}.tar.gz
@@ -18,6 +20,5 @@ script:
 - make -j
 env:
   global:
-  - PATH=$HOME/.local/bin:$PATH
   - secure: KqTr32ks3/Hpk5dzxsEFcblfysdelAVlX7Xl3iZ/RSC3XVB+aQp10ZqQcLT3H7FSPJnXR+fs4IDtYoqirvtlMo9/k/v3DVJAuZRke+v9MaR+0ghrGJDE11K9J9u5Md1JATEKa0PHCvUkP0JG6Z5oh++IzJSCK7Ba3Dbhy4cTYDhCq63lreVXyS0u780F47EiNhanL5yhtkYiNxufV3wku+Nr2cmpr/ThHfAZQCMgnP7tlnOMa3TljwuwzOkXSU85tU5KddHumXKMV0Ss+EIn5NjbXXUFEQgGX80/MI2DFf9HIT11gGfY6N5DlvFP+GZoUu5fxgWKcJ+JjR/oKZ5lsPR8QkzmjJmFck8Fyhy6fanRiFOXdMM27nJiHmqIeOW2cIMVQiUDXZ3OdtStZCvGC8CBWMVVWHO9h7LjlrrM0ILTfOFbI9MLDehBrtero1lhkCxFI15zVDNrFv8rP4wXbvJGyaBKsPZB9mdThNZaUNuXarfS6PjjPTPKDedkgtaajfYy4rRlpjedaToLlIM9c2Nrtn/luofbkUcSUM4TdRcFHy6HkFfbHkeoy/svv0fMHQceELOEZD4vdnuvIYZ8HlEbM9IHFodbPjgay2Bzy3YFD8IVkz7w1h5SVaGfFWJBwuTD5vdh5ikzKTMgFho0ccjD0nw+upOGEG7BNitHVjk=
   - secure: SAzI8ZGdoqK9aVz2Vpy9CS5K1BXp3VBf4/suGVPqG0ktFjPSI0kkjjN5kJJGqxowRsrqjBVXwVNplI58oaQ8fPDNmULr5nvYilU8eZAgkbDNONj9hae/Bt8zpTL3Ao7dxmH6tWlNNDNXGn1OIKb0fv3KP8N4sjnjzhFNensFQQANpF+YbMEw1/ERRUe5QdiNjikB5BMRGxjPg7p6D9uYh0q4pEHYjmjpMev/tQuFbViTw6BErEzKhD9yyaRWIc1f8sjTu76DoRfG/Orsc7eFXknFoxa01s462BUhEtfO12jO3FWYXDaR8OsIiADPAfaf7kFt/Bz+DaqH7jaej/mf1ufKS3cQRA69IwIimx1AuXRxH+R8OWSIo7L6NTHaT8lehLASW7+L9RP9gGMNwC35hU7Wczki8eZp8RssXB/p8tAHzhueE30fhqT1HuG/YK9uCKLIue2kB3u3WOJgbMu0a2zKcgyV4fmkoGSbJLg22y3N2XsBbIAKmW5fGwbOOyc9XMyXd1kv/5iLnGHGMfJzdvun6qN45KerFDrOltR+IuW3FRQHkrUHEh1EdRls0M9HYzs9w8TqUjjC+88DbyPPMICN29TTy4/KNx1GTYGAqZkuPItsCKmrivTo9r9jw4whXLl/kIeA4INXtJMJ4OiMcav9spShvreqtXBHIOMuyok=
