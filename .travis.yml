@@ -15,7 +15,7 @@ before_install:
 - export LLVM_PACKAGE="clang+llvm-7.0.0-${TRIPLE}"
 - aws s3 cp s3://hellollvm/packages/${LLVM_PACKAGE}.tar.gz .
 - tar -xf ${LLVM_PACKAGE}.tar.gz
-- export LLVM_DIR=${TRAVIS_BUILD_DIR}/clang+llvm-7.0.0
+- export LLVM_DIR=${TRAVIS_BUILD_DIR}/${LLVM_PACKAGE}
 script:
 - cmp {etc,${LLVM_DIR}}/package.sh
 - make -j
