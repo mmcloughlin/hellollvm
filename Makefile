@@ -9,7 +9,7 @@ OBJDUMP=$(LLVM_BIN)/llvm-objdump
 CFG=$(LLVM_BIN)/llvm-config
 
 CXXFLAGS = `${CFG} --cxxflags` -g
-LDFLAGS = `${CFG} --ldflags` -shared
+LDFLAGS = `${CFG} --ldflags` -shared -Wl,-undefined,dynamic_lookup
 
 target = example
 hooks = hook
