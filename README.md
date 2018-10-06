@@ -52,6 +52,8 @@ Use `getTerminator` method of [`BasicBlock`](http://llvm.org/doxygen/classllvm_1
 
 **How do you demangle C++ names?** LLVM provides its own implementation of `__cxa_demangle` (from `cxxabi.h`) in [`Demangle.h`](http://llvm.org/doxygen/Demangle_8h.html), specifically `itaniumDemangle`. The [symbolizer](https://llvm.org/docs/CommandGuide/llvm-symbolizer.html) source code provides a useful [example](https://github.com/llvm-mirror/llvm/blob/0444f576689f40fd292478aff54a0f6a9ceebfdb/lib/DebugInfo/Symbolize/Symbolize.cpp#L474-L482). The [`ItaniumPartialDemangler`](http://llvm.org/doxygen/structllvm_1_1ItaniumPartialDemangler.html) (introduced in LLVM 7) enables access to subcomponents of the mangled name.
 
+**How do you define command-line options?** Use [`cl::opt`](http://llvm.org/doxygen/classllvm_1_1cl_1_1opt.html) to declare options statically, as shown in [`cli.cc`](cli.cc). When the pass is loaded directly in LLVM `opt -load <pass lib>` these will be accessible as regular command-line options, and visible in help too. When loaded into Clang with `clang++ -Xclang -load -Xclang <pass lib>` options must be forwarded to the LLVM backend with the `-mllvm` flag.
+
 ## Todo
 
 - [x] Pass arguments to hook functions
