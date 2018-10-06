@@ -1,4 +1,5 @@
 *.dylib
+*.dSYM
 *.so
 *.out
 *.log
