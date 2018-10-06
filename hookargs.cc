@@ -20,11 +20,18 @@ struct HookArgs : public FunctionPass {
         false);
     Constant *hook = F.getParent()->getOrInsertFunction("metric", functype);
 
+    auto str = ConstantDataArray::getString(ctx, F.getName());
+    GlobalVariable *global =
+        new GlobalVariable(*F.getParent(), str->getType(), true,
+                           GlobalValue::LinkageTypes::PrivateLinkage, str);
+    global->setAlignment(1);
+    auto *fname = ConstantExpr::getPointerCast(global, Type::getInt8PtrTy(ctx));
+
     auto &entry = F.getEntryBlock();
     IRBuilder<> builder(&entry);
     builder.SetInsertPoint(&entry, entry.begin());
-    builder.CreateCall(hook, {builder.CreateGlobalStringPtr(F.getName()),
-                              ConstantFP::get(Type::getDoubleTy(ctx), 42.0)});
+    builder.CreateCall(hook,
+                       {fname, ConstantFP::get(Type::getDoubleTy(ctx), 42.0)});
 
     return true;
   }

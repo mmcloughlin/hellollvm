@@ -7,6 +7,7 @@
 using namespace llvm;
 
 namespace {
+
 struct Trace : public FunctionPass {
   static char ID;
   Trace() : FunctionPass(ID) {}
@@ -16,14 +17,24 @@ struct Trace : public FunctionPass {
     FunctionType *functype = FunctionType::get(
         Type::getVoidTy(ctx), {Type::getInt8PtrTy(ctx)}, false);
 
+    // Construct function name.
+    auto str = ConstantDataArray::getString(ctx, F.getName());
+    GlobalVariable *global =
+        new GlobalVariable(*F.getParent(), str->getType(), true,
+                           GlobalValue::LinkageTypes::PrivateLinkage, str);
+    global->setAlignment(1);
+    auto *fname = ConstantExpr::getPointerCast(global, Type::getInt8PtrTy(ctx));
+
     // Trace function enter.
     Constant *traceEnter =
         F.getParent()->getOrInsertFunction("trace_enter", functype);
     auto &entry = F.getEntryBlock();
-    entry.print(errs());
+    if (entry.empty()) {
+      errs() << "empty\n";
+    }
     IRBuilder<> builder(&entry);
     builder.SetInsertPoint(&entry, entry.begin());
-    auto *fname = builder.CreateGlobalStringPtr(F.getName());
+    // auto *fname = builder.CreateGlobalStringPtr(F.getName()));
     builder.CreateCall(traceEnter, {fname});
 
     // Trace before exit instructions.

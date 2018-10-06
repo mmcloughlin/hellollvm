@@ -20,7 +20,7 @@ struct Attributes : public FunctionPass {
 
     bool changed = false;
     auto a = cast<ConstantArray>(annos->getOperand(0));
-    for (int i = 0; i < a->getNumOperands(); i++) {
+    for (unsigned int i = 0; i < a->getNumOperands(); i++) {
       auto e = cast<ConstantStruct>(a->getOperand(i));
       if (auto *fn = dyn_cast<Function>(e->getOperand(0)->getOperand(0))) {
         auto anno = cast<ConstantDataArray>(

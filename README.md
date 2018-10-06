@@ -31,7 +31,7 @@ code](https://github.com/sampsyo/llvm-pass-skeleton).
 
 **How do you determine original source code location of an LLVM Function?** This requires the program is compiled with debug information `-g`. The information can be accessed through [`getSubprogram`](http://llvm.org/doxygen/classllvm_1_1Function.html#a4d834f9897d15e3a6349063b5d637cd8) method.
 
-**How do you define a string constant?** Use `CreateGlobalStringPtr(...)` on an `IRBuilder`.
+**How do you define a string constant?** Use `CreateGlobalStringPtr(...)` on an `IRBuilder`. Unfortunately I encountered an [obscure segfault with LLVM 7.0.0 on Ubuntu](https://stackoverflow.com/questions/48577492/llvm-irbuildercreateglobalstringptr-segmentation-fault). A more manual approach which avoided this problem was to use `ConstantDataArray::getString`, followed by `new GlobalVariable` and `ConstantExpr::getPointerCast`.
 
 **How do you create a floating-point constant?** Use [`ConstantFP`](http://llvm.org/doxygen/classllvm_1_1ConstantFP.html), for example `ConstantFP::get(Type::getDoubleTy(ctx), 42.0)`.
 
