@@ -1,10 +1,10 @@
 # hellollvm
 
-Basic "Hello World" LLVM passes.
-
-Based on [LLVM for Grad
+Basic "Hello World" LLVM passes. Based on [LLVM for Grad
 Students](https://www.cs.cornell.edu/~asampson/blog/llvm.html) and [skeleton
 code](https://github.com/sampsyo/llvm-pass-skeleton).
+
+[![Build status](https://img.shields.io/travis/mmcloughlin/hellollvm.svg?style=flat-square)](https://travis-ci.org/mmcloughlin/hellollvm)
 
 ## Passes
 
