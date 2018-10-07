@@ -20,6 +20,7 @@ code](https://github.com/sampsyo/llvm-pass-skeleton).
 * [`hookargs`](hookargs.cc) calls a hook function with arguments
 * [`trace`](trace.cc) inserts hooks at function enter and exit points ([script to verify correctness](parsetrace.py))
 * [`demangle`](demangle.cc) is `hello` with C++ name demangling
+* [`regexp`](regexp.cc) demonstrates the `llvm::Regex` support library
 
 ## Q&A
 

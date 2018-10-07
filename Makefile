@@ -13,7 +13,7 @@ LDFLAGS = `${CFG} --ldflags` -shared -Wl,-undefined,dynamic_lookup
 
 target = example
 hooks = hook
-passes = hello dump mutate rtlib fnentry attr srcloc cli returns hookargs trace demangle
+passes = hello dump mutate rtlib fnentry attr srcloc cli returns hookargs trace demangle regexp
 bin = $(addsuffix .out,$(passes))
 optll = $(addsuffix .opt.ll,$(passes))
 dis = $(addsuffix .dis.s,$(passes))
@@ -55,4 +55,4 @@ tools:
 	pip install cxxfilt
 
 clean:
-	$(RM) $$(cat .gitignore)
+	$(RM) -r $$(cat .gitignore)
